@@ -1,42 +1,64 @@
 <html>
-    <head><meta charset="utf-8"/></head>
+    <head>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" href="./pokeapi.css">
+    </head>
     <body>
-    <div data-role="page" id="pokeSearch-page">
-        <div data-role="header" data-theme="b">
-            <h1>Pokeapi Demos</h1>
-        </div>
+        <div id="top">
+            <h1>Search for Pokemon</h1>
+        </div> 
+        <br>
         <div data-role="main" class="ui-content">
         <form id="pokeForm" action="#pokeDetails-page" method="post">
-            <div>
-            <label for="pokeInput">Pokemon name
-            <input type="text" name="pokeInput" id="pokeInput" placeholder="Name/Number" value="">
+            <div id="searching">&nbsp;
+            <label for="pokeInput">Pokemon name/number:</label><br>
+                <input type="text" name="pokeInput" id="pokeInput" placeholder="lowercase name/number" value=""style="width:200px;height:30px;">
+                <input type="button" onClick="return pokeSubmit();" value="Search" style="width:200px;height:30px;"></input>
             </div>
             <br>
-            <div>
-            <button onClick="pokeSubmit();">Search </button>
-            </div>
         </form>
-        <div>
-        </ul>
+        <div id="result">
+            <h4>Results:</h4>
+            <ul data-role="listview" data-inset="true" id="pokeDetails">
         </div>
         </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<script src="jquery.mobile.custom/jquery.mobile.custom.min.js"></script>
+<script src="jquery.mobile.custom/jquery.mobile.custom.js"></script>
+<script src="jquery.mobile.custom/jquery.mobile.custom.structure.css"></script>
 <script>
     function pokeSubmit(){
         var param = document.getElementById("pokeInput").value;
         var pokeURL = "http://pokeapi.co/api/v2/pokemon/" + param;
 
+       
        $.getJSON(pokeURL, function(data){
-            console.log(JSON.stringify(data, null, " ")) 
-            var pokeName = data.abilities[0].ability.name;
-            console.log(pokeName);
-            var pokeType = data.types[0].name;
+            var pokeName = data.forms[0].name;
+            var pokeAbility = data.abilities[0].ability.name;
+            var pokeType = data.types[0].type.name;
             console.log(pokeType);
+            
+        $.getJSON(pokeURL, function(data){
+            var imageURI = data.sprites.front_default;
+            console.log(imageURI);
+            var li = "";
+            li += '<img src="' + imageURI + '">';
+            li += ' <h1>' + pokeName + '</h1>';
+            li += '<p>Type: ' + pokeType + '</p>';  
+            li += '<p>Ability: ' + pokeAbility + '</p>';
 
-        // this var will hold the description string
-        var pokeDescription = "";
+            // empty the listview
+            $("#pokeDetails").empty();
+
+            // append new li to listview
+            $("#pokeDetails").append(li).promise().done(function(){
+                    // $(this).listview("refresh");
+            });
+        });
+        
+
     });
     }
         
