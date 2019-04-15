@@ -31,7 +31,13 @@
         //getting the information from the search form
         var info = document.getElementById("pokeInput").value;
         //getting the Pokemon API url version 2
-        var pokeURL = "https://pokeapi.co/api/v2/pokemon/" + info;
+        
+        var pokeURL; 
+        try{
+            pokeURL = "https://pokeapi.co/api/v2/pokemon/" + info;
+        }catch(e){
+            return alert("Not valid JSON request");
+        }
         //make a JSON request to get information about the Pokemon
        $.getJSON(pokeURL, function(data){
             var pokeName = data.forms[0].name;
