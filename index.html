@@ -31,14 +31,11 @@
         //getting the information from the search form
         var info = document.getElementById("pokeInput").value;
         //getting the Pokemon API url version 2
-        var pokeURL; 
-        try{
-            pokeURL = "https://pokeapi.co/api/v2/pokemon/" + info;
-        }catch(e){
-            return alert("Not valid JSON request");
-        }
+        var pokeURL = "https://pokeapi.co/api/v2/pokemon/" + info;
+        
         //make a JSON request to get information about the Pokemon
-       $.getJSON(pokeURL, function(data){
+       try{
+           $.getJSON(pokeURL, function(data){
             var pokeName = data.forms[0].name;
             var pokeAbility = data.abilities[0].ability.name;
             var pokeType = data.types[0].type.name;
@@ -59,6 +56,10 @@
             $("#pokeDetails").append(li).promise().done(function(){
             });
         });
+       }
+       catch(e){
+            return alert("Not valid JSON request");
+       }
         
 
     });
