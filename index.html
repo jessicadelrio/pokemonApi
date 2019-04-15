@@ -34,7 +34,6 @@
         var pokeURL = "https://pokeapi.co/api/v2/pokemon/" + info;
         
         //make a JSON request to get information about the Pokemon
-       try{
            $.getJSON(pokeURL, function(data){
             var pokeName = data.forms[0].name;
             var pokeAbility = data.abilities[0].ability.name;
@@ -55,11 +54,11 @@
             // append new li to listview
             $("#pokeDetails").append(li).promise().done(function(){
             });
-        });
-       }
-       catch(e){
-            return alert("Not valid JSON request");
-       }
+        })
+         .fail(function() {
+           alert("Not valid Pokemon");
+         });
+       
         
 
     });
