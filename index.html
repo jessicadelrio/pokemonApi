@@ -54,8 +54,16 @@
             // append new li to listview
             $("#pokeDetails").append(li).promise().done(function(){
             })
-        });
-    });
+        })
+        })       
+       .fail(function() {
+           alert( "Not valid pokemon" );
+       })
+       .always(function() {
+         console.log( "Valid" );   
+       });
+        
+    
     }
         
 </script>
