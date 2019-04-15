@@ -31,7 +31,7 @@
 <script>
     function pokeSubmit(){
         var param = document.getElementById("pokeInput").value;
-        var pokeURL = "http://pokeapi.co/api/v2/pokemon/" + param;
+        var pokeURL = "https://pokeapi.co/api/v2/pokemon/" + param;
 
        
        $.getJSON(pokeURL, function(data){
@@ -54,7 +54,6 @@
 
             // append new li to listview
             $("#pokeDetails").append(li).promise().done(function(){
-                    // $(this).listview("refresh");
             });
         });
         
